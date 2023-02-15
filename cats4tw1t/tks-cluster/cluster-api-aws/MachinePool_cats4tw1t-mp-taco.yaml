@@ -1,0 +1,30 @@
+# Source: cluster-api-aws/templates/machine-pool.yaml
+apiVersion: cluster.x-k8s.io/v1beta1
+kind: MachinePool
+metadata:
+  name: cats4tw1t-mp-taco
+  namespace: cats4tw1t
+spec:
+  clusterName: cats4tw1t
+  replicas: 3
+  template:
+    metadata:
+      labels:
+            servicemesh: enabled
+            taco-ingress-gateway: enabled
+            taco-lma: enabled
+    spec:
+      bootstrap:
+        configRef:
+          apiVersion: bootstrap.cluster.x-k8s.io/v1beta1
+          kind: KubeadmConfig
+          name: cats4tw1t-mp-taco
+          namespace: cats4tw1t
+      clusterName: cats4tw1t
+      infrastructureRef:
+        apiVersion: infrastructure.cluster.x-k8s.io/v1beta2
+        kind: AWSMachinePool
+        name: cats4tw1t-mp-taco
+        namespace: cats4tw1t
+      version: v1.22.5
+
